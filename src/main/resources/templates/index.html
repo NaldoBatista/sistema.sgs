@@ -1,0 +1,28 @@
+<!--/* @thymesVar id="solicitacao" type="com.example.sgs.model.Solicitacao" */-->
+
+<h3>Hello, World!</h3>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Solicitante</th>
+            <th>Categoria</th>
+            <th>Descrição</th>
+            <th>Valor</th>
+            <th>Data solicitação</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="solicitacao: ${solicitacaoList}">
+            <td th:text="${solicitacao.getId()}"></td>
+            <td th:text="${solicitacao.getSolicitanteId()}"></td>
+            <td th:text="${solicitacao.getCategoriaId()}"></td>
+            <td th:text="${solicitacao.getDescricao()}"></td>
+            <td th:text="${solicitacao.getValor()}"></td>
+            <td>mock</td>
+            <td th:text="${solicitacao.getStatus()}"></td>
+        </tr>
+    </tbody>
+</table>
