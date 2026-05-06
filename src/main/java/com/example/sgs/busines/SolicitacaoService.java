@@ -14,7 +14,7 @@ public class SolicitacaoService {
         this.solicitacaoDAO = new SolicitacaoDAO();
     }
 
-    public List<Solicitacao> listarSolicitacoes() throws SQLException {
+    public List<Solicitacao> consultarSolicitacoes() throws SQLException {
         return solicitacaoDAO.findAll();
     }
 }

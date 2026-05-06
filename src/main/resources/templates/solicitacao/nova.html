@@ -1,0 +1,44 @@
+<!--/* @thymesVar id="solicitante" type="com.example.sgs.model.Solicitante" */-->
+<!--/* @thymesVar id="categoria" type="com.example.sgs.model.Categoria" */-->
+
+*=============================*
+<h3>Criar nova solicitacao</h3>
+*=============================*
+<form action="/solicitacao/salvar" method="post">
+
+    <label>Solicitante:</label><br>
+    <select name="solicitanteId">
+        <option value="">Selecione</option>
+        <option th:each="solicitante : ${solicitanteList}"
+                th:value="${solicitante.getId()}"
+                th:text="${solicitante.getNome()}">
+        </option>
+    </select><br><br>
+
+    <label>Categoria:</label><br>
+    <select name="categoriaId">
+        <option value="">Selecione</option>
+        <option th:each="categoria : ${categoriaList}"
+                th:value="${categoria.getId()}"
+                th:text="${categoria.getNome()}">
+        </option>
+    </select><br><br>
+
+    <label for="categoriaId">Categoria ID:</label><br>
+    <input type="number" id="categoriaId" name="categoriaId" required><br><br>
+
+    <label for="descricao">Descrição:</label><br>
+    <textarea id="descricao" name="descricao" rows="4" cols="40" required></textarea><br><br>
+
+    <label for="valor">Valor:</label><br>
+    <input type="number" id="valor" name="valor" step="0.01" required><br><br>
+
+    <label for="dataSolicitacao">Data da Solicitação:</label><br>
+    <input type="date" id="dataSolicitacao" name="dataSolicitacao" required><br><br>
+
+    <label for="status">Status:</label><br>
+    <input type="number" id="status" name="status" required><br><br>
+
+    <button type="submit">Salvar</button>
+
+</form>
