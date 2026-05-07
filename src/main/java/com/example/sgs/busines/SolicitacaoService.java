@@ -17,4 +17,8 @@ public class SolicitacaoService {
     public List<Solicitacao> consultarSolicitacoes() throws SQLException {
         return solicitacaoDAO.findAll();
     }
+
+    public void cadastrarSolicitacao(Solicitacao solicitacao) throws SQLException {
+        solicitacaoDAO.save(solicitacao);
+    }
 }

@@ -4,7 +4,7 @@
 *=============================*
 <h3>Criar nova solicitacao</h3>
 *=============================*
-<form action="/solicitacao/salvar" method="post">
+<form action="/solicitacao/cadastrar" method="post">
 
     <label>Solicitante:</label><br>
     <select name="solicitanteId">
@@ -25,19 +25,19 @@
     </select><br><br>
 
     <label for="categoriaId">Categoria ID:</label><br>
-    <input type="number" id="categoriaId" name="categoriaId" required><br><br>
+    <input type="number" id="categoriaId" name="categoriaId"><br><br>
 
     <label for="descricao">Descrição:</label><br>
-    <textarea id="descricao" name="descricao" rows="4" cols="40" required></textarea><br><br>
+    <textarea id="descricao" name="descricao" rows="2" cols="40"></textarea><br><br>
 
     <label for="valor">Valor:</label><br>
-    <input type="number" id="valor" name="valor" step="0.01" required><br><br>
+    <input type="number" id="valor" name="valor" step="0.01"><br><br>
 
     <label for="dataSolicitacao">Data da Solicitação:</label><br>
-    <input type="date" id="dataSolicitacao" name="dataSolicitacao" required><br><br>
+    <input type="date" id="dataSolicitacao" name="dataSolicitacao"><br><br>
 
     <label for="status">Status:</label><br>
-    <input type="number" id="status" name="status" required><br><br>
+    <input type="number" id="status" name="status"><br><br>
 
     <button type="submit">Salvar</button>
 

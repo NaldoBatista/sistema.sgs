@@ -2,6 +2,10 @@
 
 <h3>Hello, World!</h3>
 
+<div th:if="${mensagem}">
+    <p th:text="${mensagem}"></p>
+</div>
+
 <table border="1">
     <thead>
         <tr>
@@ -21,7 +25,7 @@
             <td th:text="${solicitacao.getCategoriaId()}"></td>
             <td th:text="${solicitacao.getDescricao()}"></td>
             <td th:text="${solicitacao.getValor()}"></td>
-            <td>mock</td>
+            <td th:text="${solicitacao.getDataSolicitacaoFormatada()}"></td>
             <td th:text="${solicitacao.getStatus()}"></td>
         </tr>
     </tbody>

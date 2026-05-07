@@ -1,16 +1,17 @@
 package com.example.sgs.model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Solicitacao {
 
-    public int id;
-    public int solicitanteId;
-    public int categoriaId;
+    public Integer id;
+    public Integer solicitanteId;
+    public Integer categoriaId;
     public String descricao;
-    public double valor;
+    public Double valor;
     public LocalDate dataSolicitacao;
-    public int status;
+    public Integer status;
 
     public int getId() {
         return id;
@@ -66,5 +67,13 @@ public class Solicitacao {
 
     public int getStatus() {
         return status;
+    }
+
+    public String getDataSolicitacaoFormatada() {
+        if (dataSolicitacao == null) {
+            return "";
+        }
+
+        return dataSolicitacao.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 }
