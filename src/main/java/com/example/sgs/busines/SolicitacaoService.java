@@ -21,4 +21,12 @@ public class SolicitacaoService {
     public void cadastrarSolicitacao(Solicitacao solicitacao) throws SQLException {
         solicitacaoDAO.save(solicitacao);
     }
+
+    public Solicitacao consultarSolicitacaoPorId(int solicitacaoId) throws SQLException {
+        return solicitacaoDAO.findById(solicitacaoId);
+    }
+
+    public void atualizarSolicitacao(Solicitacao solicitacao) throws SQLException {
+        solicitacaoDAO.update(solicitacao);
+    }
 }

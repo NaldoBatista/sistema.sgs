@@ -1,0 +1,27 @@
+<!--/* @thymesVar id="solicitacao" type="com.example.sgs.model.Solicitacao" */-->
+<!--/* @thymesVar id="solicitante" type="com.example.sgs.model.Solicitante" */-->
+<!--/* @thymesVar id="categoria" type="com.example.sgs.model.Categoria" */-->
+
+<h3>Editar solicitação</h3>
+
+<form action="/solicitacao/atualizar" method="post" th:object="${solicitacao}">
+
+    <input type="hidden" th:field="*{id}">
+
+    <label for="descricao">Descrição:</label><br>
+    <textarea id="descricao" th:field="*{descricao}" rows="3" cols="40"></textarea><br><br>
+
+    <label for="valor">Valor:</label><br>
+    <input type="number" id="valor" th:field="*{valor}" step="0.01"><br><br>
+
+    <label for="dataSolicitacao">Data da Solicitação:</label><br>
+    <input type="date" id="dataSolicitacao" name="dataSolicitacao"
+           th:value="${#temporals.format(
+            solicitacao.dataSolicitacao,
+            'yyyy-MM-dd'
+        )}" ><br><br>
+
+    <label for="status">Status:</label><br>
+    <input type="number" id="status" th:field="*{status}"><br><br>
+
+</form>

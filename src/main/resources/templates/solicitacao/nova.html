@@ -1,9 +1,7 @@
 <!--/* @thymesVar id="solicitante" type="com.example.sgs.model.Solicitante" */-->
 <!--/* @thymesVar id="categoria" type="com.example.sgs.model.Categoria" */-->
 
-*=============================*
 <h3>Criar nova solicitacao</h3>
-*=============================*
 <form action="/solicitacao/cadastrar" method="post">
 
     <label>Solicitante:</label><br>
@@ -23,9 +21,6 @@
                 th:text="${categoria.getNome()}">
         </option>
     </select><br><br>
-
-    <label for="categoriaId">Categoria ID:</label><br>
-    <input type="number" id="categoriaId" name="categoriaId"><br><br>
 
     <label for="descricao">Descrição:</label><br>
     <textarea id="descricao" name="descricao" rows="2" cols="40"></textarea><br><br>

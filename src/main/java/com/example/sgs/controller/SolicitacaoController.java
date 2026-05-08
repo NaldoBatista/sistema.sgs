@@ -9,6 +9,7 @@ import com.example.sgs.model.Solicitante;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -62,5 +63,13 @@ public class SolicitacaoController {
         redirectAttributes.addFlashAttribute(MENSAGEM, mensagem);
 
         return "redirect:/solicitacao/listar";
+    }
+
+    @GetMapping("solicitacao/editar/{id}")
+    public String editarSolicitacao(@PathVariable Integer id, Model model) throws SQLException {
+        Solicitacao solicitacao = solicitacaoService.consultarSolicitacaoPorId(id);
+        model.addAttribute("solicitacao", solicitacao);
+
+        return "solicitacao/editar";
     }
 }

@@ -44,14 +44,16 @@ public class SolicitacaoDAO {
     }
 
     public void save(Solicitacao solicitacao) throws SQLException {
-        String sql = "INSERT INTO solicitacao(" +
-                        "solicitante_id, " +
-                        "categoria_id, " +
-                        "descricao, " +
-                        "valor, " +
-                        "data_solicitacao, " +
-                        "status" +
-                    ") VALUES(?, ?, ?, ?, ?, ?)";
+        String sql = """
+                    INSERT INTO solicitacao(
+                        solicitante_id,
+                        categoria_id,
+                        descricao,
+                        valor,
+                        data_solicitacao,
+                        status
+                    ) VALUES(?, ?, ?, ?, ?, ?) 
+                    """;
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, solicitacao.getSolicitanteId());
@@ -65,5 +67,59 @@ public class SolicitacaoDAO {
         } catch (SQLException e) {
             throw new SQLException("Falha ao cadastrar solicitação.");
         }
+    }
+
+    public Solicitacao findById(int solicitacaoId) throws SQLException {
+        String sql = "SELECT * FROM solicitacao WHERE id = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, solicitacaoId);
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                if (resultSet.next()) {
+                    Solicitacao solicitacao = new Solicitacao();
+                    solicitacao.setId(resultSet.getInt("id"));
+                    solicitacao.setSolicitanteId(resultSet.getInt("solicitante_id"));
+                    solicitacao.setCategoriaId(resultSet.getInt("categoria_id"));
+                    solicitacao.setDescricao(resultSet.getString("descricao"));
+                    solicitacao.setValor(resultSet.getDouble("valor"));
+                    solicitacao.setDataSolicitacao(resultSet.getObject("data_solicitacao", LocalDate.class));
+                    solicitacao.setStatus(resultSet.getInt("status"));
+
+                    return solicitacao;
+                } else {
+                    throw new RuntimeException("Solicitação não encontrada: " + solicitacaoId);
+                }
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Falha ao consultar solicitaçao: " + solicitacaoId);
+        }
+    }
+
+    public void update(Solicitacao solicitacao) throws SQLException {
+        String sql = """
+                    UPDATE TABLE solicitacao SET
+                        solicitante_id,
+                        categoria_id,
+                        descricao,
+                        valor,
+                        data_solicitacao,
+                        status
+                    VALUES(?, ?, ?, ?, ?, ?)
+                    WHERE id = ?
+                    """;
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, solicitacao.getSolicitanteId());
+            stmt.setInt(2, solicitacao.getCategoriaId());
+            stmt.setString(3, solicitacao.getDescricao());
+            stmt.setDouble(4, solicitacao.getValor());
+            stmt.setObject(5, solicitacao.getDataSolicitacao());
+            stmt.setInt(6, solicitacao.getStatus());
+            stmt.setInt(7, solicitacao.getId());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new SQLException("Falha ao atualizar solicitação.");
+        }
+
     }
 }
