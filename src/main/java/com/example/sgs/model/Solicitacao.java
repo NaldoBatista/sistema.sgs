@@ -1,5 +1,9 @@
 package com.example.sgs.model;
 
+import com.example.sgs.repository.CategoriaDAO;
+import com.example.sgs.repository.SolicitanteDAO;
+
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -12,6 +16,8 @@ public class Solicitacao {
     public Double valor;
     public LocalDate dataSolicitacao;
     public Integer status;
+    public Solicitante solicitante;
+    public Categoria categoria;
 
     public int getId() {
         return id;
@@ -75,5 +81,23 @@ public class Solicitacao {
         }
 
         return dataSolicitacao.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    }
+
+    public Solicitante getSolicitante() throws SQLException {
+        if (solicitante == null) {
+            SolicitanteDAO solicitanteDAO = new SolicitanteDAO();
+            this.solicitante = solicitanteDAO.findById(getSolicitanteId());
+        }
+
+        return this.solicitante;
+    }
+
+    public Categoria getCategoria() throws SQLException {
+        if (categoria == null) {
+            CategoriaDAO categoriaDAO = new CategoriaDAO();
+            categoria = categoriaDAO.findById(getCategoriaId());
+        }
+
+        return categoria;
     }
 }

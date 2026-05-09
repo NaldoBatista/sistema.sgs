@@ -8,8 +8,28 @@
 
     <input type="hidden" th:field="*{id}">
 
+    <label>Solicitante:</label><br>
+    <select name="solicitanteId">
+        <option value="">Selecione</option>
+        <option th:each="solicitante : ${solicitanteList}"
+                th:value="${solicitante.id}"
+                th:text="${solicitante.nome}"
+                th:selected="${solicitante.id == solicitacao.solicitanteId}">
+        </option>
+    </select><br><br>
+
+    <label>Categoria:</label><br>
+    <select name="categoriaId">
+        <option value="">Selecione</option>
+        <option th:each="categoria : ${categoriaList}"
+                th:value="${categoria.getId()}"
+                th:text="${categoria.getNome()}"
+                th:selected="${categoria.id == solicitacao.categoriaId}">>
+        </option>
+    </select><br><br>
+
     <label for="descricao">Descrição:</label><br>
-    <textarea id="descricao" th:field="*{descricao}" rows="3" cols="40"></textarea><br><br>
+    <textarea id="descricao" th:field="*{descricao}" rows="1" cols="40"></textarea><br><br>
 
     <label for="valor">Valor:</label><br>
     <input type="number" id="valor" th:field="*{valor}" step="0.01"><br><br>
@@ -23,5 +43,7 @@
 
     <label for="status">Status:</label><br>
     <input type="number" id="status" th:field="*{status}"><br><br>
+
+    <button type="submit">Atualizar</button>
 
 </form>

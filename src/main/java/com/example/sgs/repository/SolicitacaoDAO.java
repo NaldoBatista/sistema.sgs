@@ -23,9 +23,8 @@ public class SolicitacaoDAO {
         List<Solicitacao> solicitacaoList = new ArrayList<>();
         String sql = "SELECT * FROM solicitacao";
 
-        try (PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet resultSet = stmt.executeQuery()
-        ) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ResultSet resultSet = stmt.executeQuery();
             while (resultSet.next()) {
                 Solicitacao solicitacao = new Solicitacao();
                 solicitacao.setId(resultSet.getInt("id"));
@@ -97,14 +96,13 @@ public class SolicitacaoDAO {
 
     public void update(Solicitacao solicitacao) throws SQLException {
         String sql = """
-                    UPDATE TABLE solicitacao SET
-                        solicitante_id,
-                        categoria_id,
-                        descricao,
-                        valor,
-                        data_solicitacao,
-                        status
-                    VALUES(?, ?, ?, ?, ?, ?)
+                    UPDATE solicitacao SET
+                        solicitante_id = ?,
+                        categoria_id = ?,
+                        descricao = ?,
+                        valor = ?,
+                        data_solicitacao = ?,
+                        status = ?
                     WHERE id = ?
                     """;
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -118,8 +116,18 @@ public class SolicitacaoDAO {
 
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new SQLException("Falha ao atualizar solicitação.");
+            throw new SQLException("Falha ao atualizar solicitação. ");
         }
+    }
 
+    public void remove(int solcitacaoId) throws SQLException {
+        String sql = "DELETE FROM solicitacao WHERE id = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)){
+            stmt.setInt(1, solcitacaoId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new SQLException("Falha ao remover solicitacao.");
+        }
     }
 }

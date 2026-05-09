@@ -29,4 +29,8 @@ public class SolicitacaoService {
     public void atualizarSolicitacao(Solicitacao solicitacao) throws SQLException {
         solicitacaoDAO.update(solicitacao);
     }
+
+    public void removerSolicitacao(int solicitacaoId) throws SQLException {
+        solicitacaoDAO.remove(solicitacaoId);
+    }
 }

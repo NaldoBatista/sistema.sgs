@@ -1,9 +1,15 @@
 <!--/* @thymesVar id="solicitacao" type="com.example.sgs.model.Solicitacao" */-->
-
-<h3>Hello, World!</h3>
+<!--/*@thymesVar id="getNome" type="com.example.sgs.model.Solicitante"*/-->
+<h3>SGS - SISTEMA DE GESTÃO DE SOLICITAÇÕES</h3>
 
 <div th:if="${mensagem}">
     <p th:text="${mensagem}"></p>
+</div>
+
+<div>
+    <a th:href="@{/solicitacao/nova}">
+        Nova solicitação
+    </a>
 </div>
 
 <table border="1">
@@ -11,22 +17,33 @@
         <tr>
             <th>ID</th>
             <th>Solicitante</th>
+            <th>CPF/CNPJ</th>
             <th>Categoria</th>
             <th>Descrição</th>
             <th>Valor</th>
             <th>Data solicitação</th>
             <th>Status</th>
+            <th>Açoes</th>
         </tr>
     </thead>
     <tbody>
         <tr th:each="solicitacao: ${solicitacaoList}">
             <td th:text="${solicitacao.getId()}"></td>
-            <td th:text="${solicitacao.getSolicitanteId()}"></td>
-            <td th:text="${solicitacao.getCategoriaId()}"></td>
+            <td th:text="${solicitacao.getSolicitante().getNome()}"></td>
+            <td th:text="${solicitacao.getSolicitante().getCPFOuCNPJ()}">></td>
+            <td th:text="${solicitacao.getCategoria().getNome()}"></td>
             <td th:text="${solicitacao.getDescricao()}"></td>
             <td th:text="${solicitacao.getValor()}"></td>
             <td th:text="${solicitacao.getDataSolicitacaoFormatada()}"></td>
             <td th:text="${solicitacao.getStatus()}"></td>
+            <td>
+                <a th:href="@{/solicitacao/editar/{solicitacaoId}(solicitacaoId=${solicitacao.getId()})}">
+                    Editar
+                </a>
+                <a th:href="@{/solicitacao/remover/{solicitacaoId}(solicitacaoId=${solicitacao.getId()})}">
+                    Remover
+                </a>
+            </td>
         </tr>
     </tbody>
 </table>
