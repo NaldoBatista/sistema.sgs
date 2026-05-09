@@ -1,5 +1,6 @@
 package com.example.sgs.busines;
 
+import com.example.sgs.filtro.SolicitacaoFiltros;
 import com.example.sgs.model.Solicitacao;
 import com.example.sgs.repository.SolicitacaoDAO;
 
@@ -14,8 +15,8 @@ public class SolicitacaoService {
         this.solicitacaoDAO = new SolicitacaoDAO();
     }
 
-    public List<Solicitacao> consultarSolicitacoes() throws SQLException {
-        return solicitacaoDAO.findAll();
+    public List<Solicitacao> consultarSolicitacoesPorFiltros(SolicitacaoFiltros solicitacaoFiltros) throws SQLException {
+        return solicitacaoDAO.findByFilters(solicitacaoFiltros);
     }
 
     public void cadastrarSolicitacao(Solicitacao solicitacao) throws SQLException {

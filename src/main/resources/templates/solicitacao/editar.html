@@ -24,7 +24,7 @@
         <option th:each="categoria : ${categoriaList}"
                 th:value="${categoria.getId()}"
                 th:text="${categoria.getNome()}"
-                th:selected="${categoria.id == solicitacao.categoriaId}">>
+                th:selected="${categoria.id == solicitacao.categoriaId}">
         </option>
     </select><br><br>
 

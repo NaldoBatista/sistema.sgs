@@ -3,12 +3,12 @@ package com.example.sgs.controller;
 import com.example.sgs.busines.CategoriaService;
 import com.example.sgs.busines.SolicitacaoService;
 import com.example.sgs.busines.SolicitanteService;
+import com.example.sgs.filtro.SolicitacaoFiltros;
 import com.example.sgs.model.Categoria;
 import com.example.sgs.model.Solicitacao;
 import com.example.sgs.model.Solicitante;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,9 +33,20 @@ public class SolicitacaoController {
     }
 
     @GetMapping("solicitacao/listar")
-    public String listarSolicitacoes(Model model, RedirectAttributes redirectAttributes) {
+    public String listarSolicitacoes(
+            SolicitacaoFiltros solicitacaoFiltros
+            , Model model
+            , RedirectAttributes redirectAttributes
+    ) {
         try {
-            List<Solicitacao> solicitacaoList = solicitacaoService.consultarSolicitacoes();
+            List<Solicitacao> solicitacaoList = solicitacaoService
+                    .consultarSolicitacoesPorFiltros(solicitacaoFiltros);
+            List<Solicitante> solicitanteList = solicitanteService.consultarSolicitantes();
+            List<Categoria> categoriaList = categoriaService.consultarCategorias();
+
+            model.addAttribute("solicitacaoFiltros", solicitacaoFiltros);
+            model.addAttribute("solicitanteList", solicitanteList);
+            model.addAttribute("categoriaList", categoriaList);
             model.addAttribute("solicitacaoList", solicitacaoList);
         } catch (SQLException e) {
             redirectAttributes.addFlashAttribute(MENSAGEM, e.getMessage());

@@ -1,5 +1,6 @@
 package com.example.sgs.repository;
 
+import com.example.sgs.filtro.SolicitacaoFiltros;
 import com.example.sgs.infrastructure.ConexaoDB;
 import com.example.sgs.model.Solicitacao;
 
@@ -19,11 +20,36 @@ public class SolicitacaoDAO {
         conn = ConexaoDB.getConnection();
     }
 
-    public List<Solicitacao> findAll() throws SQLException {
+    public List<Solicitacao> findByFilters(SolicitacaoFiltros solicitacaoFiltros) throws SQLException {
         List<Solicitacao> solicitacaoList = new ArrayList<>();
-        String sql = "SELECT * FROM solicitacao";
+        List<Object> params = new ArrayList<>();
+        String sql = "SELECT * FROM solicitacao WHERE 1=1";
+
+        if (solicitacaoFiltros.hasCategoriaId()) {
+            sql += " AND categoria_id = ?";
+            params.add(solicitacaoFiltros.getCategoriaId());
+        }
+
+        if (solicitacaoFiltros.hasSolicitanteId()) {
+            sql += " AND solicitante_id = ?";
+            params.add(solicitacaoFiltros.getSolicitanteId());
+        }
+
+        if (solicitacaoFiltros.hasDataInicialSolicitacao()) {
+            sql += " AND data_solicitacao >= ? ";
+            params.add(java.sql.Date.valueOf(solicitacaoFiltros.getDataInicialSolicitacao()));
+        }
+
+        if (solicitacaoFiltros.hasDataFinalSolicitacao()) {
+            sql += " AND data_solicitacao <= ?";
+            params.add(java.sql.Date.valueOf(solicitacaoFiltros.getDataFinalSolicitacao()));
+        }
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            for (int i = 0; i < params.size(); i++) {
+                stmt.setObject(i + 1, params.get(i));
+            }
+
             ResultSet resultSet = stmt.executeQuery();
             while (resultSet.next()) {
                 Solicitacao solicitacao = new Solicitacao();
