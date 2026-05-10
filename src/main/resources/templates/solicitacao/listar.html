@@ -7,12 +7,6 @@
 <h3>SGS - SISTEMA DE GESTÃO DE SOLICITAÇÕES</h3>
 
 <div>
-    <a th:href="@{/solicitacao/nova}">
-        Nova solicitação
-    </a>
-</div>
-
-<div>
     <h4>Filtros:</h4>
     <form th:action="@{/solicitacao/listar}" method="get" th:object="${solicitacaoFiltros}" >
         <label>Solicitante:</label>
@@ -49,6 +43,12 @@
     <p th:text="${mensagem}"></p>
 </div>
 
+<div>
+    <a th:href="@{/solicitacao/nova}">
+        Nova solicitação
+    </a>
+</div>
+
 <table border="1">
     <thead>
         <tr>
@@ -72,7 +72,7 @@
             <td th:text="${solicitacao.getDescricao()}"></td>
             <td th:text="${solicitacao.getValor()}"></td>
             <td th:text="${solicitacao.getDataSolicitacaoFormatada()}"></td>
-            <td th:text="${solicitacao.getStatus()}"></td>
+            <td th:text="${solicitacao.getStatus().getDescricao()}"></td>
             <td>
                 <a th:href="@{/solicitacao/editar/{solicitacaoId}(solicitacaoId=${solicitacao.getId()})}">
                     Editar

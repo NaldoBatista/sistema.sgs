@@ -1,5 +1,6 @@
 package com.example.sgs.repository;
 
+import com.example.sgs.exceptions.RegistroNaoEncontradoException;
 import com.example.sgs.filtro.SolicitacaoFiltros;
 import com.example.sgs.infrastructure.ConexaoDB;
 import com.example.sgs.model.Solicitacao;
@@ -59,7 +60,7 @@ public class SolicitacaoDAO {
                 solicitacao.setDescricao(resultSet.getString("descricao"));
                 solicitacao.setValor(resultSet.getDouble("valor"));
                 solicitacao.setDataSolicitacao(resultSet.getObject("data_solicitacao", LocalDate.class));
-                solicitacao.setStatus(resultSet.getInt("status"));
+                solicitacao.setStatusId(resultSet.getInt("status_id"));
 
                 solicitacaoList.add(solicitacao);
             }
@@ -76,7 +77,7 @@ public class SolicitacaoDAO {
                         descricao,
                         valor,
                         data_solicitacao,
-                        status
+                        status_id
                     ) VALUES(?, ?, ?, ?, ?, ?) 
                     """;
 
@@ -86,7 +87,7 @@ public class SolicitacaoDAO {
             stmt.setString(3, solicitacao.getDescricao());
             stmt.setDouble(4, solicitacao.getValor());
             stmt.setObject(5, solicitacao.getDataSolicitacao());
-            stmt.setInt(6, solicitacao.getStatus());
+            stmt.setInt(6, solicitacao.getStatusId());
 
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -108,11 +109,11 @@ public class SolicitacaoDAO {
                     solicitacao.setDescricao(resultSet.getString("descricao"));
                     solicitacao.setValor(resultSet.getDouble("valor"));
                     solicitacao.setDataSolicitacao(resultSet.getObject("data_solicitacao", LocalDate.class));
-                    solicitacao.setStatus(resultSet.getInt("status"));
+                    solicitacao.setStatusId(resultSet.getInt("status_id"));
 
                     return solicitacao;
                 } else {
-                    throw new RuntimeException("Solicitação não encontrada: " + solicitacaoId);
+                    throw new RegistroNaoEncontradoException("Solicitação não encontrada: " + solicitacaoId);
                 }
             }
         } catch (SQLException e) {
@@ -128,7 +129,7 @@ public class SolicitacaoDAO {
                         descricao = ?,
                         valor = ?,
                         data_solicitacao = ?,
-                        status = ?
+                        status_id = ?
                     WHERE id = ?
                     """;
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -137,7 +138,7 @@ public class SolicitacaoDAO {
             stmt.setString(3, solicitacao.getDescricao());
             stmt.setDouble(4, solicitacao.getValor());
             stmt.setObject(5, solicitacao.getDataSolicitacao());
-            stmt.setInt(6, solicitacao.getStatus());
+            stmt.setInt(6, solicitacao.getStatusId());
             stmt.setInt(7, solicitacao.getId());
 
             stmt.executeUpdate();

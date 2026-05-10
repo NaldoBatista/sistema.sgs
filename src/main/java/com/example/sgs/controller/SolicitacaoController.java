@@ -3,6 +3,10 @@ package com.example.sgs.controller;
 import com.example.sgs.busines.CategoriaService;
 import com.example.sgs.busines.SolicitacaoService;
 import com.example.sgs.busines.SolicitanteService;
+import com.example.sgs.enumerate.StatusSolicitacaoEnum;
+import com.example.sgs.enumerate.status.StatusSolicitacaoInterface;
+import com.example.sgs.exceptions.RegistroNaoEncontradoException;
+import com.example.sgs.exceptions.StatusTransicaoNaoPermitidaException;
 import com.example.sgs.filtro.SolicitacaoFiltros;
 import com.example.sgs.model.Categoria;
 import com.example.sgs.model.Solicitacao;
@@ -87,11 +91,14 @@ public class SolicitacaoController {
             Solicitacao solicitacao = solicitacaoService.consultarSolicitacaoPorId(solicitacaoId);
             List<Solicitante> solicitanteList = solicitanteService.consultarSolicitantes();
             List<Categoria> categoriaList = categoriaService.consultarCategorias();
+            List<StatusSolicitacaoInterface> statusSolicitacaoList = StatusSolicitacaoEnum
+                    .getStatusSolicitacaoList();
 
             model.addAttribute("solicitacao", solicitacao);
             model.addAttribute("solicitanteList", solicitanteList);
             model.addAttribute("categoriaList", categoriaList);
-        } catch (SQLException e) {
+            model.addAttribute("statusSolicitacaoList", statusSolicitacaoList);
+        } catch (SQLException | RegistroNaoEncontradoException e) {
             redirectAttributes.addFlashAttribute(MENSAGEM, e.getMessage());
             return "redirect:/solicitacao/listar";
         }
@@ -107,6 +114,11 @@ public class SolicitacaoController {
             solicitacaoService.atualizarSolicitacao(solicitacao);
         } catch (SQLException e) {
             mensagem = e.getMessage();
+        } catch (StatusTransicaoNaoPermitidaException e) {
+            mensagem = e.getMessage();
+            redirectAttributes.addFlashAttribute(MENSAGEM, mensagem);
+
+            return "redirect:/solicitacao/editar/" + solicitacao.getId();
         }
 
         redirectAttributes.addFlashAttribute(MENSAGEM, mensagem);

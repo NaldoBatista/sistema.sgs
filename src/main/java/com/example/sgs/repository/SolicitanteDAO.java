@@ -1,5 +1,6 @@
 package com.example.sgs.repository;
 
+import com.example.sgs.exceptions.RegistroNaoEncontradoException;
 import com.example.sgs.infrastructure.ConexaoDB;
 import com.example.sgs.model.Solicitante;
 
@@ -52,7 +53,7 @@ public class SolicitanteDAO {
 
                 return solicitante;
             } else {
-                throw new RuntimeException("Solicitante não encontrado.");
+                throw new RegistroNaoEncontradoException("Solicitante não encontrado.");
             }
         } catch (SQLException e) {
             throw new SQLException("Falha ao consultar categoria!");

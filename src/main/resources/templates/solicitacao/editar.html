@@ -1,15 +1,20 @@
 <!--/* @thymesVar id="solicitacao" type="com.example.sgs.model.Solicitacao" */-->
 <!--/* @thymesVar id="solicitante" type="com.example.sgs.model.Solicitante" */-->
 <!--/* @thymesVar id="categoria" type="com.example.sgs.model.Categoria" */-->
+<!--/* @thymesVar id="status" type="com.example.sgs.enumerate.status.StatusSolicitacaoInterface" */-->
 
 <h3>Editar solicitação</h3>
+
+<div th:if="${mensagem}">
+    <p th:text="${mensagem}"></p>
+</div>
 
 <form action="/solicitacao/atualizar" method="post" th:object="${solicitacao}">
 
     <input type="hidden" th:field="*{id}">
 
     <label>Solicitante:</label><br>
-    <select name="solicitanteId">
+    <select th:field="*{solicitanteId}">
         <option value="">Selecione</option>
         <option th:each="solicitante : ${solicitanteList}"
                 th:value="${solicitante.id}"
@@ -19,7 +24,7 @@
     </select><br><br>
 
     <label>Categoria:</label><br>
-    <select name="categoriaId">
+    <select th:field="*{categoriaId}">
         <option value="">Selecione</option>
         <option th:each="categoria : ${categoriaList}"
                 th:value="${categoria.getId()}"
@@ -41,8 +46,15 @@
             'yyyy-MM-dd'
         )}" ><br><br>
 
-    <label for="status">Status:</label><br>
-    <input type="number" id="status" th:field="*{status}"><br><br>
+    <label>Status:</label><br>
+    <select th:field="*{statusId}">
+        <option value="">Selecione</option>
+        <option th:each="status : ${statusSolicitacaoList}"
+                th:value="${status.getId()}"
+                th:text="${status.getDescricao()}"
+                th:selected="${status.getId() == solicitacao.statusId}">
+        </option>
+    </select><br><br>
 
     <button type="submit">Atualizar</button>
 

@@ -1,5 +1,7 @@
 package com.example.sgs.busines;
 
+import com.example.sgs.enumerate.status.Solicitado;
+import com.example.sgs.enumerate.status.StatusSolicitacaoInterface;
 import com.example.sgs.filtro.SolicitacaoFiltros;
 import com.example.sgs.model.Solicitacao;
 import com.example.sgs.repository.SolicitacaoDAO;
@@ -20,6 +22,8 @@ public class SolicitacaoService {
     }
 
     public void cadastrarSolicitacao(Solicitacao solicitacao) throws SQLException {
+        StatusSolicitacaoInterface statusInicial = new Solicitado();
+        solicitacao.setStatusId(statusInicial.getId());
         solicitacaoDAO.save(solicitacao);
     }
 
@@ -28,10 +32,25 @@ public class SolicitacaoService {
     }
 
     public void atualizarSolicitacao(Solicitacao solicitacao) throws SQLException {
+        validarAlteracaoDeStatus(solicitacao);
         solicitacaoDAO.update(solicitacao);
     }
 
     public void removerSolicitacao(int solicitacaoId) throws SQLException {
         solicitacaoDAO.remove(solicitacaoId);
+    }
+
+    private void validarAlteracaoDeStatus(Solicitacao solicitacao) throws SQLException {
+        StatusSolicitacaoInterface statusNovo = solicitacao.getStatus();
+        StatusSolicitacaoInterface statusAnterior = solicitacaoDAO
+                .findById(solicitacao.getId())
+                .getStatus();
+
+        if (statusNovo.getId() == statusAnterior.getId()) {
+            return;
+        }
+
+        Integer novoStatusId = statusAnterior.transicionarPara(statusNovo).getId();
+        solicitacao.setStatusId(novoStatusId);
     }
 }

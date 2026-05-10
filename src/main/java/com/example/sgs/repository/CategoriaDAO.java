@@ -1,5 +1,6 @@
 package com.example.sgs.repository;
 
+import com.example.sgs.exceptions.RegistroNaoEncontradoException;
 import com.example.sgs.infrastructure.ConexaoDB;
 import com.example.sgs.model.Categoria;
 
@@ -50,7 +51,7 @@ public class CategoriaDAO {
 
                 return categoria;
             } else {
-                throw new RuntimeException("Categoria não encontrada.");
+                throw new RegistroNaoEncontradoException("Categoria não encontrada.");
             }
         } catch (SQLException e) {
             throw new SQLException("Falha ao consultar categoria!");

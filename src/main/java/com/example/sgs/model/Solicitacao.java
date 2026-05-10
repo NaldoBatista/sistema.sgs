@@ -1,5 +1,7 @@
 package com.example.sgs.model;
 
+import com.example.sgs.enumerate.StatusSolicitacaoEnum;
+import com.example.sgs.enumerate.status.StatusSolicitacaoInterface;
 import com.example.sgs.repository.CategoriaDAO;
 import com.example.sgs.repository.SolicitanteDAO;
 
@@ -9,15 +11,15 @@ import java.time.format.DateTimeFormatter;
 
 public class Solicitacao {
 
-    public Integer id;
-    public Integer solicitanteId;
-    public Integer categoriaId;
-    public String descricao;
-    public Double valor;
-    public LocalDate dataSolicitacao;
-    public Integer status;
-    public Solicitante solicitante;
-    public Categoria categoria;
+    private Integer id;
+    private Integer solicitanteId;
+    private Integer categoriaId;
+    private String descricao;
+    private Double valor;
+    private LocalDate dataSolicitacao;
+    private Integer statusId;
+    private Solicitante solicitante;
+    private Categoria categoria;
 
     public int getId() {
         return id;
@@ -27,19 +29,19 @@ public class Solicitacao {
         this.id = id;
     }
 
-    public void setSolicitanteId(int solicitanteId) {
+    public void setSolicitanteId(Integer solicitanteId) {
         this.solicitanteId = solicitanteId;
     }
 
-    public int getSolicitanteId() {
+    public Integer getSolicitanteId() {
         return solicitanteId;
     }
 
-    public void setCategoriaId(int categoriaId) {
+    public void setCategoriaId(Integer categoriaId) {
         this.categoriaId = categoriaId;
     }
 
-    public int getCategoriaId() {
+    public Integer getCategoriaId() {
         return categoriaId;
     }
 
@@ -67,12 +69,12 @@ public class Solicitacao {
         this.dataSolicitacao = dataSolicitacao;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setStatusId(Integer statusId) {
+        this.statusId = statusId;
     }
 
-    public int getStatus() {
-        return status;
+    public Integer getStatusId() {
+        return statusId;
     }
 
     public String getDataSolicitacaoFormatada() {
@@ -99,5 +101,9 @@ public class Solicitacao {
         }
 
         return categoria;
+    }
+
+    public StatusSolicitacaoInterface getStatus() {
+        return StatusSolicitacaoEnum.getStatusById(this.statusId);
     }
 }
