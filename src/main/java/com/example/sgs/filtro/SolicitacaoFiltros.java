@@ -7,6 +7,7 @@ import java.time.LocalDate;
 public class SolicitacaoFiltros {
     private Integer solicitanteId;
     private Integer categoriaId;
+    private Integer statusId;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dataInicialSolicitacao;
@@ -60,5 +61,17 @@ public class SolicitacaoFiltros {
 
     public Boolean hasDataFinalSolicitacao() {
         return this.dataFinalSolicitacao != null;
+    }
+
+    public void setStatusId(Integer statusId) {
+        this.statusId = statusId;
+    }
+
+    public Boolean hasStatusId() {
+        return this.statusId != null;
+    }
+
+    public Integer getStatusId() {
+        return this.statusId;
     }
 }

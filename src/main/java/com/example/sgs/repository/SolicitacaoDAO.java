@@ -46,6 +46,11 @@ public class SolicitacaoDAO {
             params.add(java.sql.Date.valueOf(solicitacaoFiltros.getDataFinalSolicitacao()));
         }
 
+        if (solicitacaoFiltros.hasStatusId()) {
+            sql += " AND status_id = ?";
+            params.add(solicitacaoFiltros.getStatusId());
+        }
+
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             for (int i = 0; i < params.size(); i++) {
                 stmt.setObject(i + 1, params.get(i));

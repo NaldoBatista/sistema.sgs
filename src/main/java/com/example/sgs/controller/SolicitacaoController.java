@@ -11,8 +11,11 @@ import com.example.sgs.filtro.SolicitacaoFiltros;
 import com.example.sgs.model.Categoria;
 import com.example.sgs.model.Solicitacao;
 import com.example.sgs.model.Solicitante;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,7 +39,7 @@ public class SolicitacaoController {
         categoriaService = new CategoriaService();
     }
 
-    @GetMapping("solicitacao/listar")
+    @GetMapping({"/", "solicitacao/listar"})
     public String listarSolicitacoes(
             SolicitacaoFiltros solicitacaoFiltros
             , Model model
@@ -47,11 +50,14 @@ public class SolicitacaoController {
                     .consultarSolicitacoesPorFiltros(solicitacaoFiltros);
             List<Solicitante> solicitanteList = solicitanteService.consultarSolicitantes();
             List<Categoria> categoriaList = categoriaService.consultarCategorias();
+            List<StatusSolicitacaoInterface> statusSolicitacaoList = StatusSolicitacaoEnum
+                    .getStatusSolicitacaoList();
 
             model.addAttribute("solicitacaoFiltros", solicitacaoFiltros);
             model.addAttribute("solicitanteList", solicitanteList);
             model.addAttribute("categoriaList", categoriaList);
             model.addAttribute("solicitacaoList", solicitacaoList);
+            model.addAttribute("statusSolicitacaoList", statusSolicitacaoList);
         } catch (SQLException e) {
             redirectAttributes.addFlashAttribute(MENSAGEM, e.getMessage());
         }
@@ -61,9 +67,11 @@ public class SolicitacaoController {
 
     @GetMapping("solicitacao/nova")
     public String novaSolicitacao(Model model) throws SQLException {
+        Solicitacao solicitacao = new Solicitacao();
         List<Solicitante> solicitanteList = solicitanteService.consultarSolicitantes();
         List<Categoria> categoriaList = categoriaService.consultarCategorias();
 
+        model.addAttribute("solicitacao", solicitacao);
         model.addAttribute("solicitanteList", solicitanteList);
         model.addAttribute("categoriaList", categoriaList);
 
@@ -71,8 +79,18 @@ public class SolicitacaoController {
     }
 
     @PostMapping("solicitacao/cadastrar")
-    public String cadastraSolicitacao(Solicitacao solicitacao, RedirectAttributes redirectAttributes) {
+    public String cadastraSolicitacao(
+            @Valid Solicitacao solicitacao
+            , BindingResult bindingResult
+            , RedirectAttributes redirectAttributes
+    ) {
         String mensagem = "Solicitação cadastrada como sucesso!";
+        List<String> erroList = solicitacaoService.validarCamposSolicitacao(bindingResult);
+
+        if (!erroList.isEmpty()) {
+            redirectAttributes.addFlashAttribute("erroList", erroList);
+            return "redirect:/solicitacao/nova";
+        }
 
         try {
             solicitacaoService.cadastrarSolicitacao(solicitacao);
@@ -107,8 +125,17 @@ public class SolicitacaoController {
     }
 
     @PostMapping("/solicitacao/atualizar")
-    public String atualizarSolicitacao(Solicitacao solicitacao, RedirectAttributes redirectAttributes) {
+    public String atualizarSolicitacao(@Valid Solicitacao solicitacao
+            , BindingResult bindingResult
+            , RedirectAttributes redirectAttributes
+    ) {
         String mensagem = "Solicitação atualizada como sucesso!";
+        List<String> erroList = solicitacaoService.validarCamposSolicitacao(bindingResult);
+
+        if (!erroList.isEmpty()) {
+            redirectAttributes.addFlashAttribute("erroList", erroList);
+            return "redirect:/solicitacao/editar/" + solicitacao.getId();
+        }
 
         try {
             solicitacaoService.atualizarSolicitacao(solicitacao);

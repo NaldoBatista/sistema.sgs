@@ -5,8 +5,11 @@ import com.example.sgs.enumerate.status.StatusSolicitacaoInterface;
 import com.example.sgs.filtro.SolicitacaoFiltros;
 import com.example.sgs.model.Solicitacao;
 import com.example.sgs.repository.SolicitacaoDAO;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SolicitacaoService {
@@ -52,5 +55,19 @@ public class SolicitacaoService {
 
         Integer novoStatusId = statusAnterior.transicionarPara(statusNovo).getId();
         solicitacao.setStatusId(novoStatusId);
+    }
+
+    public List<String> validarCamposSolicitacao(BindingResult bindingResult) {
+        List<String> erroList = new ArrayList<>();
+
+        if (!bindingResult.hasErrors()) {
+            return erroList;
+        }
+
+        for (FieldError fieldError : bindingResult.getFieldErrors()) {
+            erroList.add(fieldError.getDefaultMessage());
+        }
+
+        return erroList;
     }
 }

@@ -4,6 +4,8 @@ import com.example.sgs.enumerate.StatusSolicitacaoEnum;
 import com.example.sgs.enumerate.status.StatusSolicitacaoInterface;
 import com.example.sgs.repository.CategoriaDAO;
 import com.example.sgs.repository.SolicitanteDAO;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -12,20 +14,33 @@ import java.time.format.DateTimeFormatter;
 public class Solicitacao {
 
     private Integer id;
+
+    @NotNull(message = "Solicitante é obrigatório")
     private Integer solicitanteId;
+
+    @NotNull(message = "Categoria é obrigatória")
     private Integer categoriaId;
+
+    @NotNull(message = "Descrição é obrigatórioa")
     private String descricao;
+
+    @NotNull(message = "Valor é obrigatório")
+    @Positive(message = "Valor deve ser maior que zero")
     private Double valor;
+
+    @NotNull(message = "A data da solicitação não pode ser vazia")
     private LocalDate dataSolicitacao;
+
     private Integer statusId;
+
     private Solicitante solicitante;
     private Categoria categoria;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -57,7 +72,7 @@ public class Solicitacao {
         this.valor = valor;
     }
 
-    public double getValor() {
+    public Double getValor() {
         return valor;
     }
 
