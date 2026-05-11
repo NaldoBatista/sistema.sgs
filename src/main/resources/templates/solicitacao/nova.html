@@ -1,11 +1,21 @@
 <!--/* @thymesVar id="solicitante" type="com.example.sgs.model.Solicitante" */-->
 <!--/* @thymesVar id="categoria" type="com.example.sgs.model.Categoria" */-->
+<!--/* @thymesVar id="solicitacao" type="com.example.sgs.model.Solicitacao" */-->
 
 <h3>Criar nova solicitacao</h3>
-<form action="/solicitacao/cadastrar" method="post">
+
+<ul>
+    <li th:each="erro : ${erroList}"
+        th:text="${erro}">
+    </li>
+</ul>
+
+<form th:object="${solicitacao}"
+      th:action="@{/solicitacao/cadastrar}"
+      method="post">
 
     <label>Solicitante:</label><br>
-    <select name="solicitanteId">
+    <select th:field="*{solicitanteId}">
         <option value="">Selecione</option>
         <option th:each="solicitante : ${solicitanteList}"
                 th:value="${solicitante.getId()}"
@@ -14,7 +24,7 @@
     </select><br><br>
 
     <label>Categoria:</label><br>
-    <select name="categoriaId">
+    <select th:field="*{categoriaId}">
         <option value="">Selecione</option>
         <option th:each="categoria : ${categoriaList}"
                 th:value="${categoria.getId()}"
@@ -22,14 +32,14 @@
         </option>
     </select><br><br>
 
-    <label for="descricao">Descrição:</label><br>
-    <textarea id="descricao" name="descricao" rows="1" cols="40"></textarea><br><br>
+    <label>Descrição:</label><br>
+    <textarea th:field="*{descricao}" rows="1" cols="40"></textarea><br><br>
 
-    <label for="valor">Valor:</label><br>
-    <input type="number" id="valor" name="valor" step="0.01"><br><br>
+    <label>Valor:</label><br>
+    <input type="number" th:field="*{valor}" ><br><br>
 
-    <label for="dataSolicitacao">Data da Solicitação:</label><br>
-    <input type="date" id="dataSolicitacao" name="dataSolicitacao"><br><br>
+    <label>Data da Solicitação:</label><br>
+    <input type="date" th:field="*{dataSolicitacao}"><br><br>
 
     <button type="submit">Salvar</button>
 

@@ -9,6 +9,12 @@
     <p th:text="${mensagem}"></p>
 </div>
 
+<ul>
+    <li th:each="erro : ${erroList}"
+        th:text="${erro}">
+    </li>
+</ul>
+
 <form action="/solicitacao/atualizar" method="post" th:object="${solicitacao}">
 
     <input type="hidden" th:field="*{id}">

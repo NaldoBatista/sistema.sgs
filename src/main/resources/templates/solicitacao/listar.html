@@ -27,6 +27,15 @@
             </option>
         </select>
 
+        <label>Status:</label>
+        <select th:field="*{statusId}">
+            <option value="">Selecione</option>
+            <option th:each="status : ${statusSolicitacaoList}"
+                    th:value="${status.getId()}"
+                    th:text="${status.getDescricao()}">
+            </option>
+        </select>
+
         <br>
 
         <label>Data inicial solicitaçao:</label>
