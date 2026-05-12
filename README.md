@@ -20,10 +20,10 @@ através da url: <http://localhost:8080/>
 
 ### Arquitetura e Soluções
 
-* O projeto foi organizado utilizando a arquitura em camadas MVC (Model- View - Controller)
+* O projeto foi organizado utilizando a arquitura em camadas MVC (Model - View - Controller)
 * A camada de persitência de dados (Repository) foi desenvolvida utlizando o padrão de 
 projeto **DAO** (Data Acess Object) e SQL nativo para a ações do CRUD e consultas 
 dinâmicas.
-* Para implementação da regra de negócio para mudança do status da solicitação,
- foi utlizada uma viriação do padrão de projeto **State**, de modo a permitir a valiçao
+* Para implementação da regra de negócio da validação de mudança do status da solicitação,
+ foi utlizada uma viriação do padrão de projeto **State**, de modo a verificar a regra
  a cada mudança de status.
