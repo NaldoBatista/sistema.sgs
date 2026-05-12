@@ -1,4 +1,4 @@
-package com.example.sgs.filtro;
+package com.example.sgs.filters;
 
 import org.springframework.format.annotation.DateTimeFormat;
 

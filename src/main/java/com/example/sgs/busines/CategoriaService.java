@@ -1,6 +1,5 @@
 package com.example.sgs.busines;
 
-import com.example.sgs.filtro.SolicitacaoFiltros;
 import com.example.sgs.model.Categoria;
 import com.example.sgs.repository.CategoriaDAO;
 

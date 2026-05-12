@@ -2,11 +2,20 @@ version: '3.8'
 
 services:
   app:
-      build: .
-      ports:
-        - "8080:8080"
-      depends_on:
-        - mysql
+    image: maven:3.9.9-eclipse-temurin-21
+
+    working_dir: /app
+
+    volumes:
+      - ./:/app
+
+    command: mvn spring-boot:run
+
+    ports:
+      - "8080:8080"
+
+    depends_on:
+      - mysql
   mysql:
     image: mysql:8.0
     container_name: mysql_container

@@ -1,7 +1,7 @@
 package com.example.sgs.repository;
 
 import com.example.sgs.exceptions.RegistroNaoEncontradoException;
-import com.example.sgs.filtro.SolicitacaoFiltros;
+import com.example.sgs.filters.SolicitacaoFiltros;
 import com.example.sgs.infrastructure.ConexaoDB;
 import com.example.sgs.model.Solicitacao;
 
