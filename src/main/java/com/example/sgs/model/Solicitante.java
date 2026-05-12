@@ -1,5 +1,7 @@
 package com.example.sgs.model;
 
+import com.example.sgs.utils.Utils;
+
 public class Solicitante {
     private int id;
     private String nome;
@@ -21,8 +23,8 @@ public class Solicitante {
         this.nome = nome;
     }
 
-    public String getCPFOuCNPJ() {
-        return CPFOuCNPJ;
+    public String getCPFOuCNPJComMascara() {
+        return Utils.formatarCPFOuCNPJ(CPFOuCNPJ);
     }
 
     public void setCPFOuCNPJ(String CPFOuCNPJ) {

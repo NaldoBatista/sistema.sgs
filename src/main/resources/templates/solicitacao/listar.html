@@ -76,10 +76,10 @@
         <tr th:each="solicitacao: ${solicitacaoList}">
             <td th:text="${solicitacao.getId()}"></td>
             <td th:text="${solicitacao.getSolicitante().getNome()}"></td>
-            <td th:text="${solicitacao.getSolicitante().getCPFOuCNPJ()}">></td>
+            <td th:text="${solicitacao.getSolicitante().getCPFOuCNPJComMascara()}">></td>
             <td th:text="${solicitacao.getCategoria().getNome()}"></td>
             <td th:text="${solicitacao.getDescricao()}"></td>
-            <td th:text="${solicitacao.getValor()}"></td>
+            <td th:text="${solicitacao.getValorFormatado()}"></td>
             <td th:text="${solicitacao.getDataSolicitacaoFormatada()}"></td>
             <td th:text="${solicitacao.getStatus().getDescricao()}"></td>
             <td>

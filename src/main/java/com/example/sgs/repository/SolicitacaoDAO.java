@@ -63,7 +63,7 @@ public class SolicitacaoDAO {
                 solicitacao.setSolicitanteId(resultSet.getInt("solicitante_id"));
                 solicitacao.setCategoriaId(resultSet.getInt("categoria_id"));
                 solicitacao.setDescricao(resultSet.getString("descricao"));
-                solicitacao.setValor(resultSet.getDouble("valor"));
+                solicitacao.setValor(resultSet.getBigDecimal("valor"));
                 solicitacao.setDataSolicitacao(resultSet.getObject("data_solicitacao", LocalDate.class));
                 solicitacao.setStatusId(resultSet.getInt("status_id"));
 
@@ -90,7 +90,7 @@ public class SolicitacaoDAO {
             stmt.setInt(1, solicitacao.getSolicitanteId());
             stmt.setInt(2, solicitacao.getCategoriaId());
             stmt.setString(3, solicitacao.getDescricao());
-            stmt.setDouble(4, solicitacao.getValor());
+            stmt.setBigDecimal(4, solicitacao.getValor());
             stmt.setObject(5, solicitacao.getDataSolicitacao());
             stmt.setInt(6, solicitacao.getStatusId());
 
@@ -112,7 +112,7 @@ public class SolicitacaoDAO {
                     solicitacao.setSolicitanteId(resultSet.getInt("solicitante_id"));
                     solicitacao.setCategoriaId(resultSet.getInt("categoria_id"));
                     solicitacao.setDescricao(resultSet.getString("descricao"));
-                    solicitacao.setValor(resultSet.getDouble("valor"));
+                    solicitacao.setValor(resultSet.getBigDecimal("valor"));
                     solicitacao.setDataSolicitacao(resultSet.getObject("data_solicitacao", LocalDate.class));
                     solicitacao.setStatusId(resultSet.getInt("status_id"));
 
@@ -141,7 +141,7 @@ public class SolicitacaoDAO {
             stmt.setInt(1, solicitacao.getSolicitanteId());
             stmt.setInt(2, solicitacao.getCategoriaId());
             stmt.setString(3, solicitacao.getDescricao());
-            stmt.setDouble(4, solicitacao.getValor());
+            stmt.setBigDecimal(4, solicitacao.getValor());
             stmt.setObject(5, solicitacao.getDataSolicitacao());
             stmt.setInt(6, solicitacao.getStatusId());
             stmt.setInt(7, solicitacao.getId());
