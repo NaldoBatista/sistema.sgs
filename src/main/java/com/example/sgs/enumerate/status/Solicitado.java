@@ -31,7 +31,7 @@ public class Solicitado implements StatusSolicitacaoInterface {
         throw new StatusTransicaoNaoPermitidaException(
             "Solicitações com status " + this.DESCRICAO +
             " só podem ser movidas para " + rejeitado.getDescricao()
-                    + "ou" + liberado.getDescricao()
+                    + " ou " + liberado.getDescricao()
         );
     }
 }
