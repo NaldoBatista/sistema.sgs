@@ -14,7 +14,7 @@ proposto para vaga de programador de sistemas de computação.
     ```
     docker compose up --build
     ```
-* O banco de dados será criado e populado automaticamente
+* O banco de dados será criado e populado automaticamente (Caso não ocorra os scripts DDL e seed estão no diretório /sql)
 * Após a criação e execução dos containers, a aplicação poderá ser acessada 
 através da url: <http://localhost:8080/>
 
