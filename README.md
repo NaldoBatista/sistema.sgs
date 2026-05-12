@@ -1,4 +1,4 @@
-## SGS - Sistema de Gerenciamento de Solicitações
+## SGS - Sistema de Gestão de Solicitações
 
 Aplicação desenvolvida como solução para o desafio técnico 
 proposto para vaga de programador de sistemas de computação.
